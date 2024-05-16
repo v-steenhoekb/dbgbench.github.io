@@ -13,4 +13,6 @@ ARG PATH="/root/miniconda3/bin:${PATH}"
 RUN apt install -y wget
 ADD scripts/conda_install.sh .
 RUN bash conda_install.sh
+ADD scripts/entrypoint.sh /
+ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]
 WORKDIR /root/Desktop
