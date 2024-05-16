@@ -1,5 +1,6 @@
 FROM debug/grep
 ENV SUBJECT grep
+RUN sudo apt-get update
 RUN sudo apt-get install -y gdb valgrind
 ADD scripts/prepareVM.sh .
 ADD scripts/test.grep.54d55bba.patch .
@@ -7,4 +8,9 @@ ADD scripts/patch.grep.sh .
 RUN ./prepareVM.sh $SUBJECT
 RUN ./patch.grep.sh
 RUN rm -rf /root/corerepo && rm /*.m4 && rm prepareVM.sh
+ENV PATH="/root/miniconda3/bin:${PATH}"
+ARG PATH="/root/miniconda3/bin:${PATH}"
+RUN apt install -y wget
+ADD scripts/conda_install.sh .
+RUN bash conda_install.sh
 WORKDIR /root/Desktop
